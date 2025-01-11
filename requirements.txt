@@ -1,0 +1,13 @@
+python-dotenv
+pdfminer.six
+openai
+numpy
+pandas
+textblob
+nltk
+transformers
+torch
+langchain_community
+langchain
+sentence_transformers
+python-dotenv
