@@ -91,21 +91,22 @@ if __name__ == "__main__":
     hf_api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
     # Example Inputs
-    # resume_text = """
-    # Shantanu Kolekar
-    # Data Analyst with 3+ years of experience in data analysis, ETL processes, and dashboard creation using Power BI and Tableau.
-    # Skilled in Python, SQL, and AWS. Proven ability to derive actionable insights from complex datasets.
-    # """
+    resume_text = """
+    Shantanu Kolekar
+    Data Analyst with 3+ years of experience in data analysis, ETL processes, and dashboard creation using Power BI and Tableau.
+    Skilled in Python, SQL, and AWS. Proven ability to derive actionable insights from complex datasets.
+    """
     
-    # job_description = """
-    # We are seeking a Data Analyst with expertise in SQL, Python, and Power BI.
-    # The ideal candidate should have experience in ETL processes, data visualization, and cloud platforms like AWS.
-    # Knowledge of machine learning and predictive analytics is a plus.
-    # """
+    job_description = """
+    We are seeking a Data Analyst with expertise in SQL, Python, and Power BI.
+    The ideal candidate should have experience in ETL processes, data visualization, and cloud platforms like AWS.
+    Knowledge of machine learning and predictive analytics is a plus.
+    """
 
 
-    resume_text = extract_text('resume.pdf')
-    job_description = extract_text('jd.pdf')
+    # Provide your own resume & job description 
+    # resume_text = extract_text('resume.pdf')    # path to your resume pdf file
+    # job_description = extract_text('jd.pdf')    # path to your job_desciption file in pdf format
     context = "You are an expert resume builder."
 
     # Prompt Template for Resume Customization
