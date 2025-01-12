@@ -5,6 +5,7 @@ from langchain_community.llms import OpenAI
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 import warnings
+from pdfminer.high_level import extract_text
 
 warnings.filterwarnings("ignore")
 
@@ -23,7 +24,7 @@ class ResumeCustomizer:
         context: str,
         prompt_template: str,
         openai_model_name: str = "",
-        hf_repo_id: str = "meta-llama/Llama-3.1-8B",
+        hf_repo_id: str = "mistralai/Mixtral-8x7B-Instruct-v0.1",
         temperature: float = 0.1,
         max_length: int = 1024,
     ) -> str:
@@ -72,7 +73,11 @@ class ResumeCustomizer:
                 resume_text=resume_text,
                 job_description=job_description,
             )
-            return response
+            # Extracting only the response part from the output
+            response_start_index = response.find('Response;')
+            response_output = response[response_start_index + len('Response;'):].strip()
+    
+            return response_output
 
         else:
             print("Invalid model_type. Choose either 'openai' or 'huggingface'.")
@@ -86,19 +91,21 @@ if __name__ == "__main__":
     hf_api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
     # Example Inputs
-    resume_text = """
-    Shantanu Kolekar
-    Data Analyst with 3+ years of experience in data analysis, ETL processes, and dashboard creation using Power BI and Tableau.
-    Skilled in Python, SQL, and AWS. Proven ability to derive actionable insights from complex datasets.
-    """
+    # resume_text = """
+    # Shantanu Kolekar
+    # Data Analyst with 3+ years of experience in data analysis, ETL processes, and dashboard creation using Power BI and Tableau.
+    # Skilled in Python, SQL, and AWS. Proven ability to derive actionable insights from complex datasets.
+    # """
     
-    job_description = """
-    We are seeking a Data Analyst with expertise in SQL, Python, and Power BI.
-    The ideal candidate should have experience in ETL processes, data visualization, and cloud platforms like AWS.
-    Knowledge of machine learning and predictive analytics is a plus.
-    """
+    # job_description = """
+    # We are seeking a Data Analyst with expertise in SQL, Python, and Power BI.
+    # The ideal candidate should have experience in ETL processes, data visualization, and cloud platforms like AWS.
+    # Knowledge of machine learning and predictive analytics is a plus.
+    # """
 
 
+    resume_text = extract_text('resume.pdf')
+    job_description = extract_text('jd.pdf')
     context = "You are an expert resume builder."
 
     # Prompt Template for Resume Customization
@@ -112,6 +119,8 @@ if __name__ == "__main__":
 
     Customize the resume to better align with the job description by highlighting relevant skills and experiences.
     Ensure the tone is professional and the formatting is suitable for a resume.
+
+    Response;
     """
 
     # Initialize the Resume Customizer
@@ -124,9 +133,10 @@ if __name__ == "__main__":
         job_description=job_description,
         context=context,
         prompt_template=prompt_template,
-        openai_model_name="gpt-3.5-turbo",  # Replace with "gpt-4" if required
+        openai_model_name="gpt-3.5-turbo",
+        hf_repo_id="openai-community/gpt2", # mistralai/Mistral-7B-v0.1
         temperature=0.1,
-        max_length=256,
+        max_length=1400,
     )
 
     # print("Customized Resume:")
