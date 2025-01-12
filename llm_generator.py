@@ -117,9 +117,14 @@ if __name__ == "__main__":
     The following is the job description:
     {job_description}
 
-    Customize the resume to better align with the job description by highlighting relevant skills and experiences.
-    Ensure the tone is professional and the formatting is suitable for a resume.
+    Customize the resume in following manner:
+    
+    Your task is to improve the Skills, Experience and Summary section only to better align with the job description by highlighting relevant skills & experience.
 
+    Don Not Make any changes to Education section.
+
+    Ensure the tone is professional and the formatting is suitable for a resume.
+    
     Response;
     """
 
