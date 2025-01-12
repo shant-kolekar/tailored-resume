@@ -139,7 +139,7 @@ if __name__ == "__main__":
         context=context,
         prompt_template=prompt_template,
         openai_model_name="gpt-3.5-turbo",
-        hf_repo_id="openai-community/gpt2", # mistralai/Mistral-7B-v0.1
+        hf_repo_id="mistralai/Mistral-7B-Instruct-v0.2", # mistralai/Mistral-7B-v0.1
         temperature=0.1,
         max_length=1400,
     )
